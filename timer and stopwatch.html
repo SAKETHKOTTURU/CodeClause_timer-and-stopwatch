@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Timer</title>
+    <style>
+      body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        flex-direction: column;
+        background-color: aqua;
+      }
+      p{
+        font-size: 25px;
+        text-align: center;
+      }
+      div1{
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      
+      }
+      div2{
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      }
+      h1{
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div1>
+    <h1 >Timer</h1>
+    <label for="hours">Hours:</label>
+    <input type="number" id="hours" min="0" max="23" value="0">
+    <label for="minutes">Minutes:</label>
+    <input type="number" id="minutes" min="0" max="59" value="0">
+    <label for="seconds">Seconds:</label>
+    <input type="number" id="seconds" min="0" max="59" value="0">
+    <p id="timer">00:00:00</p>
+    <button onclick="startTimer()">Start</button>
+    <button onclick="stopTimer()">Stop</button>
+    <button onclick="resetTimer()">Reset</button>
+    <script>
+      let timerInterval;
+      let timerSeconds = 0;
+
+      function startTimer() {
+        const hours = parseInt(document.getElementById("hours").value);
+        const minutes = parseInt(document.getElementById("minutes").value);
+        const seconds = parseInt(document.getElementById("seconds").value);
+        timerSeconds = hours * 3600 + minutes * 60 + seconds;
+        timerInterval = setInterval(() => {
+          timerSeconds--;
+          if (timerSeconds < 0) {
+            clearInterval(timerInterval);
+            document.getElementById("timer").innerHTML = "00:00:00";
+          } else {
+            const hours = Math.floor(timerSeconds / 3600);
+            const minutes = Math.floor((timerSeconds % 3600) / 60);
+            const seconds = timerSeconds % 60;
+            document.getElementById("timer").innerHTML = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+          }
+        }, 1000);
+      }
+
+      function stopTimer() {
+        clearInterval(timerInterval);
+      }
+
+      function resetTimer() {
+        clearInterval(timerInterval);
+        timerSeconds = 0;
+        document.getElementById("timer").innerHTML = "00:00:00";
+      }
+    </script>
+    </div1>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div2>
+    <h1>Stopwatch</h1>
+        <p id="stopwatch">00:00:00</p>
+        <button onclick="startStopwatch()">Start</button>
+        <button onclick="pauseStopwatch()">Pause</button>
+        <button onclick="resetStopwatch()">Reset</button>
+        <script>
+          let stopwatchInterval;
+          let stopwatchSeconds = 0;
+    
+          function startStopwatch() {
+            stopwatchInterval = setInterval(() => {
+              stopwatchSeconds++;
+              const hours = Math.floor(stopwatchSeconds / 3600);
+              const minutes = Math.floor((stopwatchSeconds % 3600) / 60);
+              const seconds = stopwatchSeconds % 60;
+              document.getElementById("stopwatch").innerHTML = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+            }, 1000);
+          }
+    
+          function pauseStopwatch() {
+            clearInterval(stopwatchInterval);
+          }
+    
+          function resetStopwatch() {
+            clearInterval(stopwatchInterval);
+            stopwatchSeconds = 0;
+            document.getElementById("stopwatch").innerHTML = "00:00:00";
+          }
+        </script>
+    </div2> 
+    </body>
+    </html>
